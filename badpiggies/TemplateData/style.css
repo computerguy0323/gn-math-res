@@ -1,53 +1,196 @@
+
+/* =========================================
+   BAD PIGGIES WEBGL - FULL WINDOW LAYOUT
+   ========================================= */
+
 @keyframes ihopepplnotice {
-    0% { opacity: 1; }
-    80% { opacity: 1; }
-    100% { opacity: 0; visibility: hidden; }
-} 
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+/* =========================================
+   PAGE LAYOUT
+   ========================================= */
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+body {
+    background-color: #232323;
+}
+
+/* =========================================
+   CUSTOM LOADING SPLASH
+   ========================================= */
+
 body::before {
-    content: ""; 
+    content: "";
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50%;
-    height: 50%;
-    background: url('https://cdn.jsdelivr.net/gh/computerguy0323/gn-math-res@main/badpiggies/TemplateData/progressLogo.Dark.gif') no-repeat center / contain;
+
+    width: 50vw;
+    height: 50vh;
+
+    background-image: url('https://cdn.jsdelivr.net/gh/computerguy0323/gn-math-res@main/badpiggies/TemplateData/progressLogo.Dark.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+
     z-index: 99;
+    pointer-events: none;
+
     animation: ihopepplnotice 6s ease-in-out forwards;
-    /* this shit is just like an image popping up for 6 seconds, uhhh this was made bc the unity loading icon is too small to see the text so yea */
 }
+
 body::after {
     content: "please wait..";
     position: fixed;
     bottom: 10%;
     left: 50%;
     transform: translateX(-50%);
+
     color: white;
-    font-family: "Arial", sans-serif;
+    font-family: Arial, sans-serif;
     font-size: 24px;
+
     z-index: 100;
+    pointer-events: none;
+
     animation: ihopepplnotice 6s ease-in-out forwards;
 }
-body {
-    background-color: #232323;
+
+/* =========================================
+   UNITY GAME CONTAINER
+   ========================================= */
+
+.webgl-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
     margin: 0;
+    padding: 0;
 }
-.webgl-content * {border: 0; margin: 0; padding: 0}
-.webgl-content {position: absolute; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}
 
+/* Remove default spacing and borders */
 
-.webgl-content .logo, .progress {position: absolute; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}
-.webgl-content .logo {background: url('progressLogo.Light.png') no-repeat center / contain; width: 154px; height: 130px;}
-.webgl-content .progress {height: 18px; width: 141px; margin-top: 90px;}
-.webgl-content .progress .empty {background: url('progressEmpty.Light.png') no-repeat right / cover; float: right; width: 100%; height: 100%; display: inline-block;}
-.webgl-content .progress .full {background: url('progressFull.Light.png') no-repeat left / cover; float: left; width: 0%; height: 100%; display: inline-block;}
+.webgl-content * {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-.webgl-content .logo.Dark {background-image: url('progressLogo.Dark.png');}
-.webgl-content .progress.Dark .empty {background-image: url('progressEmpty.Dark.png');}
-.webgl-content .progress.Dark .full {background-image: url('progressFull.Dark.png');}
+/* =========================================
+   UNITY CANVAS
+   ========================================= */
 
-.webgl-content .footer {margin-top: 5px; height: 38px; line-height: 38px; font-family: Helvetica, Verdana, Arial, sans-serif; font-size: 18px; color:white;}
-.webgl-content .footer .webgl-logo, .title, .fullscreen {height: 100%; display: inline-block; background: transparent center no-repeat;}
-.webgl-content .footer .webgl-logo {background-image: url('webgl-logo.png'); width: 204px; float: left;}
-.webgl-content .footer .title {margin-right: 10px; float: right;}
-.webgl-content .footer .fullscreen {background-image: url('fullscreen.png'); width: 38px; float: right;}
+.webgl-content canvas {
+    display: block;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* =========================================
+   UNITY LOADING LOGO AND PROGRESS BAR
+   ========================================= */
+
+.webgl-content .logo,
+.webgl-content .progress {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.webgl-content .logo {
+    background: url('progressLogo.Light.png') no-repeat center / contain;
+    width: 154px;
+    height: 130px;
+}
+
+.webgl-content .progress {
+    height: 18px;
+    width: 141px;
+    margin-top: 90px;
+}
+
+.webgl-content .progress .empty {
+    background: url('progressEmpty.Light.png') no-repeat right / cover;
+    float: right;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+}
+
+.webgl-content .progress .full {
+    background: url('progressFull.Light.png') no-repeat left / cover;
+    float: left;
+    width: 0%;
+    height: 100%;
+    display: inline-block;
+}
+
+/* Dark loading theme */
+
+.webgl-content .logo.Dark {
+    background-image: url('progressLogo.Dark.png');
+}
+
+.webgl-content .progress.Dark .empty {
+    background-image: url('progressEmpty.Dark.png');
+}
+
+.webgl-content .progress.Dark .full {
+    background-image: url('progressFull.Dark.png');
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+.webgl-content .footer {
+    display: none;
+}
+
+/* =========================================
+   MOBILE SUPPORT
+   ========================================= */
+
+@media (max-width: 768px) {
+    body::before {
+        width: 80vw;
+        height: 40vh;
+    }
+
+    body::after {
+        font-size: 18px;
+    }
+}

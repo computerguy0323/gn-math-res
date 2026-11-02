@@ -1,24 +1,212 @@
+
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
+<head>
     <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Unity WebGL Player | Bad Piggies</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
-    <script src="TemplateData/UnityProgress.js"></script>
-    <script src="Build/UnityLoader.js"></script>
-    <script>
-      var gameInstance = UnityLoader.instantiate("gameContainer", "Build/Bad Piggies.json", {onProgress: UnityProgress});
-    </script>
-  </head>
-  <body style="background-color:black;">
+
+    <link rel="shortcut icon"
+        href="https://cdn.jsdelivr.net/gh/computerguy0323/gn-math-res@main/badpiggies/TemplateData/favicon.ico">
+
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/computerguy0323/gn-math-res@main/badpiggies/TemplateData/style.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/computerguy0323/gn-math-res@main/badpiggies/TemplateData/UnityProgress.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/computerguy0323/gn-math-res@main/badpiggies/Build/UnityLoader.js"></script>
+
+    <style>
+        @keyframes ihopepplnotice {
+            0%, 80% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #232323;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50%;
+            height: 50%;
+            background: url('https://cdn.jsdelivr.net/gh/computerguy0323/gn-math-res@main/badpiggies/TemplateData/progressLogo.Dark.gif') no-repeat center / contain;
+            z-index: 99;
+            pointer-events: none;
+            animation: ihopepplnotice 6s ease-in-out forwards;
+        }
+
+        body::after {
+            content: "please wait..";
+            position: fixed;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            z-index: 100;
+            pointer-events: none;
+            animation: ihopepplnotice 6s ease-in-out forwards;
+        }
+
+        .webgl-content {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            transform: none !important;
+            -webkit-transform: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        #gameContainer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #gameContainer canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .webgl-content .logo,
+        .webgl-content .progress {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+        }
+
+        .webgl-content .logo {
+            background: url('https://cdn.jsdelivr.net/gh/computerguy0323/gn-math-res@main/badpiggies/TemplateData/progressLogo.Dark.png') no-repeat center / contain;
+            width: 154px;
+            height: 130px;
+        }
+
+        .webgl-content .progress {
+            height: 18px;
+            width: 141px;
+            margin-top: 90px;
+        }
+
+        .webgl-content .progress .empty {
+            background: url('https://cdn.jsdelivr.net/gh/computerguy0323/gn-math-res@main/badpiggies/TemplateData/progressEmpty.Dark.png') no-repeat right / cover;
+            float: right;
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+        }
+
+        .webgl-content .progress .full {
+            background: url('https://cdn.jsdelivr.net/gh/computerguy0323/gn-math-res@main/badpiggies/TemplateData/progressFull.Dark.png') no-repeat left / cover;
+            float: left;
+            width: 0%;
+            height: 100%;
+            display: inline-block;
+        }
+
+        .webgl-content .footer {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            z-index: 101;
+            height: 38px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: Helvetica, Verdana, Arial, sans-serif;
+            font-size: 18px;
+            color: white;
+        }
+
+        .webgl-content .footer .title {
+            display: inline-block;
+            height: 38px;
+            line-height: 38px;
+            order: 1;
+        }
+
+        .webgl-content .footer .fullscreen {
+            display: inline-block;
+            order: 2;
+            width: 38px;
+            height: 38px;
+            background: url('https://cdn.jsdelivr.net/gh/computerguy0323/gn-math-res@main/badpiggies/TemplateData/fullscreen.png') center no-repeat;
+            cursor: pointer;
+        }
+
+        @media (max-width: 600px) {
+            body::before {
+                width: 75%;
+                height: 40%;
+            }
+
+            body::after {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
     <div class="webgl-content">
-      <div id="gameContainer" style="width: 960px; height: 600px"></div>
-      <div class="footer">
-        <div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
-        <div class="title">Bad Piggies</div>
-      </div>
+
+        <div id="gameContainer"></div>
+
+        <div class="footer">
+            <div class="title">Bad Piggies</div>
+            <div class="fullscreen"
+                onclick="gameInstance.SetFullscreen(1)"
+                title="Fullscreen">
+            </div>
+        </div>
+
     </div>
-  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d97a2473e2de80f',t:'MTc3MzAzMzY2Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+    <script>
+        var gameInstance = UnityLoader.instantiate(
+            "gameContainer",
+            "Build/Bad Piggies.json",
+            {
+                onProgress: UnityProgress
+            }
+        );
+
+        window.addEventListener("resize", function () {
+            var container = document.getElementById("gameContainer");
+            var canvas = container.querySelector("canvas");
+
+            if (canvas) {
+                canvas.style.width = "100%";
+                canvas.style.height = "100%";
+            }
+        });
+    </script>
+</body>
 </html>
